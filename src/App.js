@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./styles.css";
+import ToDoLists from "./ToDoList";
 
 export default function App() {
   const [inputList, setInputList] = useState(" ");
@@ -19,11 +20,21 @@ export default function App() {
 
     setInputList("");
   };
+
+  const deleteItems = (id) => {
+    console.log("Deleted");
+
+    setItems((oldItems) => {
+      return oldItems.filter((arrayElement, index) => {
+        return index !== id;
+      });
+    });
+  };
   return (
     <div className="main_div">
       <div className="center_div">
         <br />
-        <h1>List</h1>
+        <h1>ToDo List</h1>
         <br />
         <input
           type="text"
@@ -37,8 +48,15 @@ export default function App() {
           {/* <li> {inputList} </li> */}
 
           {/* // empty array call */}
-          {items.map((itemval) => {
-            return <li> {itemval} </li>;
+          {items.map((itemval, index) => {
+            return (
+              <ToDoLists
+                key={index}
+                id={index}
+                text={itemval}
+                onSelect={deleteItems}
+              />
+            );
           })}
         </ol>
       </div>
